@@ -66,8 +66,8 @@ class PDFFixer(object):
         """Try to fix errors in PDF using qpdf"""
         pdf_filename = os.path.splitext(os.path.basename(self.pdf_path))[0]
         pdf_dirpath = os.path.dirname(self.pdf_path)
-        args = [self._qpdf_exec, self.pdf_path, u"{}/{}_fixed.pdf".format(
-            pdf_dirpath, pdf_filename)]
+        fixed_pdf_path = u"{}/{}_fixed.pdf".format(pdf_dirpath, pdf_filename)
+        args = [self._qpdf_exec, self.pdf_path, fixed_pdf_path]
 
         process_output = None
         try:
@@ -80,10 +80,8 @@ class PDFFixer(object):
         except subprocess.CalledProcessError as e:
             # This is not necessarily an error
             if re.search("operation succeeded", e.output):
-                return True
+                return fixed_pdf_path
             else:
                 raise PDFError(process_output if process_output else e.message)
         else:
-            # No need to fix or successfully fixed
-            return process_output == "" or re.search("operation succeeded",
-                                                     process_output)
+            return fixed_pdf_path
