@@ -35,7 +35,7 @@ class PDFFixer(object):
             raise PDFNotFound(u"{} not found or not readable".format(
                 pdf_path.decode('utf8')))
 
-        if not self.is_pdf(pdf_path):
+        if not PDFFixer.is_pdf(pdf_path):
             raise PDFInvalidMimeType(u"{} is not a PDF file".format(
                 pdf_path.decode('utf8')))
 
@@ -46,7 +46,8 @@ class PDFFixer(object):
         self._qpdf_exec = "qpdf"
 
 
-    def is_pdf(self, pdf_path):
+    @staticmethod
+    def is_pdf(pdf_path):
         """
         Check if a file is a PDF
         :param pdf_path:
