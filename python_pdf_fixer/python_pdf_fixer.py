@@ -35,7 +35,7 @@ class PDFFixer(object):
             raise PDFNotFound(u"{} not found or not readable".format(
                 pdf_path.decode('utf8')))
 
-        if not re.search("PDF document", magic.from_file(pdf_path)):
+        if not self.is_pdf(pdf_path):
             raise PDFInvalidMimeType(u"{} is not a PDF file".format(
                 pdf_path.decode('utf8')))
 
@@ -44,6 +44,15 @@ class PDFFixer(object):
         # TODO: Check OS
         self._jhove_exec = "jhove"
         self._qpdf_exec = "qpdf"
+
+
+    def is_pdf(self, pdf_path):
+        """
+        Check if a file is a PDF
+        :param pdf_path:
+        :return: True if the file is a PDF. False otherwise.
+        """
+        return re.search("PDF document", magic.from_file(pdf_path))
 
     def has_errors(self, timeout=None):
         """Check if PDF file has errors using jhove"""
