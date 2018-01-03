@@ -3,7 +3,7 @@
 
 """The setup script."""
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -34,7 +34,7 @@ setup(
     author="Jorge Arevalo",
     author_email='jorge.arevalo@reclamador.es',
     url='https://github.com/jorgeas80/python_pdf_fixer',
-    packages=find_packages(include=['python_pdf_fixer']),
+    packages=['python_pdf_fixer'],
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
